@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Overpass:wght@300;400&family=Roboto:wght@700&display=swap"
+        rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@300&family=Overpass:wght@300;400&family=Roboto:wght@700&display=swap"
+        rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/uuid@9.0.1/dist/index.min.js"></script>
+</head>
+<style>
+    .root_div {
+        --bg-color: #1c1c1c;
+        --primary-color: #ffffff;
+        --secondary-color: #777777;
+        font-size: 15px;
+        line-height: 23px;
+    }
+
+    .chat_bot_wrapper {
+        position: fixed;
+        display: none;
+        top: 40%;
+        left: 50%;
+        text-align: start;
+        transform: translate(-50%, -50%);
+        font-family: 'Fira Sans', sans-serif;
+        min-width: 800px;
+        overflow: auto;
+        background-color: var(--bg-color);
+        color: var(--primary-color);
+        padding: 2rem 2rem 0 2rem;
+        z-index: 9999px;
+        border-radius: 4px;
+        max-height: 500px;
+    }
+
+    .overlay {
+        position: fixed;
+        display: none;
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        height: 100vh;
+        overflow: hidden;
+        z-index: 999px;
+        background-color: rgba(136, 144, 150, 0.5);
+    }
+
+    .chat_area {
+        display: flex;
+        flex-direction: column;
+        gap: 20px
+    }
+
+    .chat_area .img_section .ai_label {
+        display: none;
+    }
+
+    .chat_area img {
+        height: 60px;
+        width: 60px;
+        object-fit: cover;
+        margin-top: 10px;
+        border-radius: 100%
+    }
+
+    .popular_questions_wrapper {
+        margin-top: 3rem;
+    }
+
+    .popular_question_title {
+        color: var(--secondary-color);
+        font-size: .8rem;
+    }
+
+    h4 {
+        color: #ffffff;
+    }
+
+    .question {
+        border: 1px solid grey;
+        padding: 0.8rem;
+        border-radius: 8px;
+    }
+
+    .fixed_bottom {
+        position: sticky;
+        bottom: 0px;
+        background: var(--bg-color);
+        width: 100%;
+        padding-block: 1rem 1.4rem;
+    }
+
+    .input_section input {
+        width: 100%;
+        padding-block: 16px;
+        text-indent: 10px;
+        background: rgba(255, 255, 255, 0.04);
+        border: none;
+        outline: none;
+        color: white;
+        font-size: 1rem;
+        border-radius: 4px;
+    }
+
+    .footer_area {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .footer_area p {
+        color: var(--secondary-color);
+    }
+
+    .footer_area div button {
+        border: 1px solid grey;
+        cursor: pointer;
+        background: transparent;
+        color: var(--secondary-color);
+        padding: 6px 10px;
+        border-radius: 2px;
+    }
+
+
+    .chat_area .question_answer_section img {
+        height: 35px;
+        width: 35px;
+        object-fit: cover;
+        margin-top: 10px;
+        border-radius: 100%
+    }
+
+    .question_answer_section .user_question {
+        display: flex;
+        gap: 15px;
+        border-block: 1px solid rgba(255, 255, 255, 0.16);
+        padding-block: 30px;
+        justify-content: flex-end;
+    }
+
+    .question_answer_section .ai_answer {
+        display: flex;
+        gap: 15px;
+        padding-block: 30px;
+    }
+
+    .ask_ai_button {
+        position: fixed;
+        right: 3rem;
+        bottom: 3rem;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background-color: var(--bg-color);
+        color: var(--primary-color);
+        font-family: 'Fira Sans', sans-serif;
+        border: none;
+        cursor: pointer;
+        padding-inline: 20px;
+        border-radius: 18px;
+        font-size: 16px;
+        transition: .1s all linear;
+    }
+
+    .ask_ai_button img {
+        height: 30px;
+        width: 30px;
+        object-fit: cover;
+        border-radius: 100%
+    }
+
+    .ask_ai_button:hover {
+        transform: scale(1.1);
+    }
+
+    @media (max-width: 768px) {
+        .chat_bot_wrapper {
+            min-width: 350px;
+            padding: 1.4rem 1.4rem 0 1.4rem;
+        }
+
+        .chat_area .img_section {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .chat_area img {
+            height: 50px;
+            width: 50px;
+        }
+
+        .chat_area .img_section .ai_label {
+            display: block;
+            background: #2e2e2e;
+            border-radius: 12px;
+            font-size: 14px;
+            padding: 4px 12px;
+            color: #ff77c6;
+        }
+    }
+
+    @media (min-width: 768px) {
+        .chat_bot_wrapper {
+            max-width: 800px;
+        }
+    }
+</style>
+
+<body>
+    <div class='root_div'>
+        <div class="overlay"></div>
+
+        <div class='chat_bot_wrapper'>
+            <div class='chat_area'>
+                <div class='img_section'>
+                    <img alt="bg-image"
+                        src='https://png.pngtree.com/thumb_back/fh260/background/20230408/pngtree-robot-white-cute-robot-blue-light-background-image_2199825.jpg' />
+                    <p class='ai_label'>AI Assistant</p>
+                </div>
+                <div>
+                    <p>Hi!</p>
+                    <p>I'm an AI assistant trained on documentation, issues and other content.</p>
+                    <p>Ask me anything about Topic.</p>
+                </div>
+                <div class='question_answer_section'></div>
+            </div>
+
+            <div class='fixed_bottom'>
+                <div class='input_section'>
+                    <input class='input_field' type='text' placeholder='How do I get started?' />
+                </div>
+
+                <div class='footer_area'>
+                    <p>Powered by 😎</p>
+                    <div>
+                        <button>Get Help</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class='ask_ai_button'>
+            <p>Ask AI</p>
+            <img alt="bot_image"
+                src='https://png.pngtree.com/thumb_back/fh260/background/20230408/pngtree-robot-white-cute-robot-blue-light-background-image_2199825.jpg' />
+        </button>
+    </div>
+</body>
+
+</html>

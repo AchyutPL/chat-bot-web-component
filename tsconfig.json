@@ -1,0 +1,39 @@
+{
+    "compilerOptions": {
+        "target": "esnext",
+        "lib": [
+            "dom",
+            "dom.iterable",
+            "esnext"
+        ],
+        "skipLibCheck": true,
+        "strict": true,
+        "forceConsistentCasingInFileNames": true,
+        "noEmit": false,
+        "esModuleInterop": true,
+        "module": "esnext",
+        "rootDir": "./src",
+        "moduleResolution": "node",
+        "resolveJsonModule": true,
+        "outDir": "./dist",
+        "isolatedModules": true,
+        "jsx": "preserve",
+        "declaration": true,
+        "types": [
+            "node"
+        ],
+        "paths": {
+            "@/*": [
+                "./src/*"
+            ]
+        }
+    },
+    "include": [
+        "src",
+        "declaration.d.ts"
+    ],
+    "exclude": [
+        "node_modules",
+        "example"
+    ],
+}

@@ -1,0 +1,63 @@
+{
+    "name": "chat-bot-by-atp",
+    "type": "module",
+    "version": "2.0.6",
+    "main": "./dist/index.js",
+    "module": "./dist/index.mjs",
+    "types": "./dist/index.d.ts",
+    "description": "Chat Bot",
+    "license": "ISC",
+    "sideEffects": false,
+    "files": [
+        "dist/"
+    ],
+    "publishConfig": {
+        "access": "public"
+    },
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/index.mjs",
+            "require": "./dist/index.js"
+        },
+        "./package.json": "./package.json"
+    },
+    "isLibrary": true,
+    "outputFormat": "esmodule",
+    "devDependencies": {
+        "@rollup/plugin-html": "^1.0.3",
+        "@rollup/plugin-image": "^3.0.3",
+        "@rollup/plugin-typescript": "^11.1.5",
+        "bun-types": "latest",
+        "rollup-plugin-copy": "^3.5.0",
+        "rollup-plugin-dts": "^6.1.0",
+        "rollup-plugin-esbuild": "^6.1.0",
+        "rollup-plugin-terser": "^7.0.2"
+    },
+    "scripts": {
+        "build": "bun build ./src/index.ts --outdir ./dist",
+        "build:tsc": "tsc && cp -r ./src/assets ./dist",
+        "build:cjs": "tsc --module CommonJS --outDir dist/cjs",
+        "build:esm": "tsc --module EsNext --outDir dist/esm",
+        "build:both": "tsc --module CommonJS --outDir dist/cjs & tsc --module EsNext --outDir dist/esm",
+        "build:roll": "rollup -c"
+    },
+    "peerDependencies": {
+        "typescript": "^5.0.0"
+    },
+    "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
+    },
+    "dependencies": {
+        "rollup-plugin-html": "^0.2.1"
+    }
+}
